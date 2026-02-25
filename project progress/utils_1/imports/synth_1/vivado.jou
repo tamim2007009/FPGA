@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Wed Feb 25 11:41:16 2026
+# Process ID: 2172
+# Current directory: C:/Users/USER/Desktop/lab_3/lab_3/lab_3.srcs/utils_1/imports/synth_1
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent11652 C:\Users\USER\Desktop\lab_3\lab_3\lab_3.srcs\utils_1\imports\synth_1\basys3_multiplier.dcp
+# Log file: C:/Users/USER/Desktop/lab_3/lab_3/lab_3.srcs/utils_1/imports/synth_1/vivado.log
+# Journal file: C:/Users/USER/Desktop/lab_3/lab_3/lab_3.srcs/utils_1/imports/synth_1\vivado.jou
+# Running On: DESKTOP-BJNQ6OF, OS: Windows, CPU Frequency: 2496 MHz, CPU Physical cores: 14, Host memory: 16945 MB
+#-----------------------------------------------------------
+start_gui
+open_checkpoint C:/Users/USER/Desktop/lab_3/lab_3/lab_3.srcs/utils_1/imports/synth_1/basys3_multiplier.dcp
+close_design
