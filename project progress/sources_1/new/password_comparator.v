@@ -2,15 +2,15 @@
 module password_comparator(
     input clk,
     input check_btn,
-    input [7:0] password_input,
+    input [3:0] password_input,
     output reg match,
     output reg [7:0] display_out
 );
 
 // Predefined password (you can change this value)
-localparam [7:0] CORRECT_PASSWORD = 8'hA5;  // Password = 0xA5 (165 decimal)
+localparam [3:0] CORRECT_PASSWORD = 4'b1010;  // Password = 1010 (binary)
 
-reg [7:0] stored_password;
+reg [3:0] stored_password;
 reg btn_prev;
 wire btn_pressed;
 
@@ -29,11 +29,11 @@ always @(posedge clk) begin
         // Binary comparison
         if(password_input == CORRECT_PASSWORD) begin
             match <= 1'b1;          // Password matches - Door UNLOCK
-            display_out <= 8'hFF;   // Display FF = Unlocked
+            display_out <= {4'h0, password_input};   // Display 0X = Unlocked (X = input)
         end
         else begin
             match <= 1'b0;          // Password wrong - Door LOCKED
-            display_out <= 8'h00;   // Display 00 = Locked
+            display_out <= {4'hE, password_input};   // Display EX = Locked (X = input)
         end
     end
 end
