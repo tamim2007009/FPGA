@@ -6,6 +6,8 @@ module alu (
     output reg zero
 );
 
+wire [3:0] temp_result;
+
 always @(*) begin
     case(opcode)
         4'b0000: result = a + b;      // Addition
@@ -15,9 +17,8 @@ always @(*) begin
         4'b0100: result = a - b;      // Compare by subtraction
         default: result = 4'b0000;
     endcase
-end
-
-always @(*) begin
+    
+    // Zero flag: set if opcode is COMPARE (0100) and result is zero
     if ((opcode == 4'b0100) && (result == 4'b0000))
         zero = 1;
     else

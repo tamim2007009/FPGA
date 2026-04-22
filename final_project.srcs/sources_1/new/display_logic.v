@@ -20,18 +20,15 @@ always @(*) begin
             // Show user ID when authenticated
             display_value = user_id;
         end
-        LOCK: begin
-            // Show remaining attempts when password doesn't match
+        IDLE, CHECK, LOCK: begin
+            // Show remaining attempts whenever the user is not authenticated.
             display_value = (MAX_ATTEMPTS - failed_attempts);
         end
         LOCKED_OUT: begin
             // Show 0 (zero attempts remaining) during lockout
             display_value = 4'd0;
         end
-        default: begin
-            // IDLE or other states: show 15 (F for "First attempt") or blank
-            display_value = 4'hF;
-        end
+        default: display_value = 4'd0;
     endcase
 end
 

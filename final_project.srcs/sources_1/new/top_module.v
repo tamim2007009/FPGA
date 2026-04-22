@@ -8,7 +8,16 @@ module top_module (
     output unlock_led,
     output lockout_led,
     output [6:0] seven_segment,
-    output [3:0] anode_enable
+    output [3:0] anode_enable,
+    // VGA outputs
+    output vga_hsync,
+    output vga_vsync,
+    output [3:0] vga_red,
+    output [3:0] vga_green,
+    output [3:0] vga_blue,
+    // PS/2 keyboard inputs
+    input ps2_clk,
+    input ps2_data
 );
 
 wire [3:0] stored_password;
@@ -60,6 +69,58 @@ display_mux mux_7seg (
     .digit_value(display_value),
     .seven_segment(seven_segment),
     .anode_enable(anode_enable)
+);
+
+// VGA Controller
+wire [9:0] pixel_x, pixel_y;
+wire valid_pixel;
+vga_controller vga_ctrl (
+    .clk(clk),
+    .reset(reset),
+    .hsync(vga_hsync),
+    .vsync(vga_vsync),
+    .pixel_x(pixel_x),
+    .pixel_y(pixel_y),
+    .valid_pixel(valid_pixel)
+);
+
+// PS/2 Keyboard
+wire [7:0] key_code;
+wire key_valid;
+ps2_keyboard kbd (
+    .clk(clk),
+    .reset(reset),
+    .ps2_clk(ps2_clk),
+    .ps2_data(ps2_data),
+    .key_code(key_code),
+    .key_valid(key_valid)
+);
+
+// UI Display Logic
+wire [127:0] display_text;
+ui_display_logic ui_logic (
+    .user_id(user_id),
+    .stored_password(stored_password),
+    .entered_password(switch_input),
+    .state(cu_state),
+    .failed_attempts(cu_failed_attempts),
+    .unlock_led(unlock_led),
+    .lockout_led(lockout_led),
+    .alu_result(alu_result),
+    .zero_flag(zero_flag),
+    .display_text(display_text)
+);
+
+// VGA Text Display
+vga_text_display vga_text (
+    .clk(clk),
+    .pixel_x(pixel_x),
+    .pixel_y(pixel_y),
+    .valid_pixel(valid_pixel),
+    .display_text(display_text),
+    .red(vga_red),
+    .green(vga_green),
+    .blue(vga_blue)
 );
 
 endmodule
